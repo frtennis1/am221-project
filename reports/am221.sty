@@ -1,0 +1,206 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{am221}
+
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb,enumitem,color}
+\RequirePackage[all]{xy}
+\RequirePackage{graphicx}
+\RequirePackage{comment}
+\RequirePackage{bm}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{booktabs}
+\RequirePackage{listings,inconsolata}
+
+\definecolor{gq}{HTML}{1F4788}
+
+%% Links
+
+% \hypersetup{
+%     colorlinks = true,
+%     allcolors = RoyalBlue
+% }
+
+%% Code
+\definecolor{string}{HTML}{BA2121}
+\definecolor{cmt}{HTML}{408080}
+\definecolor{key}{HTML}{008000}
+\lstset{language=Python,
+  numbers=left,
+  numberstyle=\footnotesize\ttfamily,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{cmt},
+  keywordstyle=\bfseries\color{key},
+  stringstyle=\color{string},
+  columns=fullflexible,
+  basicstyle=\ttfamily\color{black},
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+
+
+
+
+%%%%%%%%%%%%%%%commands%%%%%%%%%%%%%%%%%%%%%%%
+
+% Statistics
+% \newcommand{\E}{\mathbb{E}}
+\newcommand{\Estar}{\mathbb{E}_\star}
+
+% \newcommand{\var}{\operatorname{Var}}
+\newcommand{\cov}{\operatorname{Cov}}
+\newcommand{\corr}{\operatorname{Corr}}
+
+
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\Vstar}{\mathbb{V}_\star}
+
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Pstar}{\mathbb{P}_\star}
+
+\renewcommand{\*}{\star}
+
+\newcommand{\pstar}{p^\star}
+\newcommand{\ptheta}{p_\theta}
+
+\renewcommand{\H}{\mathcal H}
+
+\newcommand{\Bern}{\operatorname{Bern}}
+\newcommand{\Unif}{\operatorname{Unif}}
+\newcommand{\Bin}{\operatorname{Bin}}
+\newcommand{\Expo}{\operatorname{Expo}}
+\newcommand{\Pois}{\operatorname{Pois}}
+\newcommand{\Gammadist}{\operatorname{Gamma}}
+\newcommand{\Logistic}{\operatorname{Logistic}}
+\newcommand{\Laplace}{\operatorname{Laplace}}
+\newcommand{\NBin}{\operatorname{NBin}}
+\newcommand{\Beta}{\operatorname{Beta}}
+\newcommand{\Geom}{\operatorname{Geom}}
+\newcommand{\Dir}{\operatorname{Dir}}
+\newcommand{\FS}{\operatorname{FS}}
+\newcommand{\Norm}{\mathcal{N}}
+\newcommand{\Mult}{\operatorname{Mult}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\pto}{\overset{\Prstar}{\to}}
+\newcommand{\dto}{\overset{d}{\to}}
+\newcommand{\asto}{\overset{a.s.}{\to}}
+\newcommand{\iid}{\overset{i.i.d.}{\sim}}
+
+\DeclareSymbolFont{symbolsC}{U}{txsyc}{m}{n}
+\DeclareMathSymbol{\indep}{\mathrel}{symbolsC}{121}
+
+               \newcommand{\notes}[5]{
+        \noindent
+        \begin{center}
+        \framebox{
+                \vbox{
+                \hbox to 5.78in { { \bf Stat 210}
+                \hfill #2}
+                \vspace{4mm}
+                \hbox to 5.78in { {\large \hfill #5 \hfill} }
+                \vspace{2mm}
+                \hbox to 5.78in { {\it #3 \hfill #4} }
+                }
+        }
+        \end{center}
+        \vspace*{4mm}
+}
+
+
+
+% single letters
+% \newcommand{\N}{\mathbb{N}}
+% \newcommand{\Z}{\mathbb{Z}}
+% \newcommand{\Q}{\mathbb{Q}}
+% % \newcommand{\R}{\mathbb{R}}
+% \newcommand{\C}{\mathbb{C}}
+
+% \newcommand{\G}{\mathcal{G}}
+% \newcommand{\M}{\mathcal{M}}
+% \newcommand{\F}{\mathcal{F}}
+
+% linear algebra
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+
+\newcommand*\colvecb[1]{
+        \global\colveccount#1
+        \begin{bmatrix}
+        \colvecbnext
+}
+\def\colvecbnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecbnext
+        \else
+                \end{bmatrix}
+        \fi
+}
+
+
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% \newcommand{\inprod}[1]{\left\langle {#1} \right \rangle}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\diag}{\operatorname{diag}}
+
+% differentiation
+\newcommand{\diff}[2]{\frac{\partial{#1}}{\partial{#2}}}
+
+% algebra
+\newcommand{\aut}{\operatorname{Aut}}
+\newcommand{\alt}{\mathrm{Alt}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\stab}{\operatorname{Stab}}
+
+% misc
+\newcommand{\parens}[1]{\left({#1}\right)}
+\newcommand{\pr}{\parens}
+\newcommand{\prr}{\parens}
+\newcommand{\bk}[1]{\left[{#1}\right]}
+\newcommand{\br}[1]{\left\{{#1}\right\}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\ip}[1]{\langle #1 \rangle}
+\renewcommand{\hat}{\widehat}
+\renewcommand{\bar}{\overline}
+\newcommand{\tr}{\operatorname{tr}} % trace
+
+\newcommand{\bhat}[1]{\hat {\bm {#1}}}
+\newcommand{\btilde}[1]{\tilde {\bm {#1}}}
+\newcommand{\bbar}[1]{\bar {\bm {#1}}}
+
+\newcommand{\T}{\mathcal T}
+\newcommand{\uppr}[1]{^{(#1)}}
+
+
+\newenvironment{sol}{\color{gq}\begin{proof}[Solution]}
+{\end{proof}}
+
+
+
+
+\endinput

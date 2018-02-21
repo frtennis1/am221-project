@@ -1,5 +1,5 @@
-# AM 221 Final Project
-======================
+AM 221 Final Project
+====================
 
 The aim of this project is to survey the effectiveness of optimization
 techniques in calculating Wasserstein metrics and attempt to develop an

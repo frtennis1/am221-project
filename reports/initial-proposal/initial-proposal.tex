@@ -2,8 +2,9 @@
 %     Created: Tue Feb 20 10:00 PM 2018 E
 % Last Change: Tue Feb 20 10:00 PM 2018 E
 %
-\documentclass[letter]{amsart}
+\documentclass{amsart}
 \usepackage{../am221}
+
 \usepackage[margin=1in]{geometry}
 \linespread{1.1}
 
@@ -21,7 +22,7 @@
 \section{Collaboration}
 
 Francisco and Kevin will work together to research the relevant optimization
-techniques helpful to calculating the Wasserstein distance quickly. Then, they
+techniques for efficiently computing Wasserstein distances and solving optimal transport problems. Then, they
 will split up techniques, and through implementations of them, empirically (and
 when possible, theoretically) assess their performance. Time permitting, they
 will then attempt to create a new algorithm that performs competitively with
@@ -29,60 +30,63 @@ state of the art benchmarks.
 
 \section{Problem Statement}
 
-If we are given two probability measures $\mu$ and $\nu$ on metric space
-$(M,d)$ with finite moments,
-\[ \int_M d(x,x_0)^p d\mu(x) < \infty \text{ and }\int_M d(x,x_0)^p d\nu(x) <
-\infty\]
-then we define the $p^\text{th}$ Wasserstein distance as
-\[ W_p(\mu, \nu) := \left( \inf_{\gamma \in \Gamma(\mu, \nu)} \int_{M \times
-M} d(x,y)^p \text{d} \gamma(x,y) \right)^{1/p}\]
-where $\Gamma(\mu, \nu)$ is the collection of all measures on $M \times M$ with
-marginals $\mu$ and $\nu$.
-
-
-This can also be thought of as the optimal transport problem. If we think of a
+Given two probability distributions $p_X$ and $p_Y$, the \emph{$p$\textsuperscript{th} Wasserstein distance} is the following optimization problem: \[
+W_p(p_X,p_Y) = \pr{\inf_{(X,Y)} \br{ \mathbb{E}_{(X,Y)} \bk{d(X,Y)^p}: X\sim p_X, Y\sim p_Y }}^{1/p},
+\]
+where the minimum is taken over all joint distributions with marginals $p_X,p_Y$. The Wasserstein distance is a probabilistic view of a class of problems called \emph{optimal transport problems} \cite{peyre2017computational}. If we think of a
 probability distribution as a collection of ``mass'' at different points in $M$
 (with density of the mass proportional to the probability measure), then the
 Wasserstein distance captures the cost of transforming one distribution into the
 other in units of mass times distance.  This analogy is particularly
-interpretable if we have a discrete metric space, where probability measures can
-be viewed as point masses.
+interpretable if we consider discrete probability measures, which are collections of point masses.
 
 Solving the optimization problem underpinning this metric is in general hard and
 remains an unsolved problem. We will aim to test the effectiveness of different
 optimization techniques to this problem, with particular focus on discrete
-metric spaces.
+distributions.
 
 \section{Motivation}
 
-Numerous important applications exist for the Wasserstein metric. 
+Numerous important applications exist for the Wasserstein metric. For instance, if we consider images as a discrete probabilistic distribution over $\mathbb{R}^2$,\footnote{For example, we may consider black-and-white images, where the probability mass is proportional to the pixel intensity.} the Wasserstein distance turns out to mimick human perceptions of similarity: Images that are similar to humans are close in Wasserstein distances. Other distances over distributions, such as the well-known Kullback-Leibler divergence, do not have such properties. Thus, Wasserstein distances are extremely important in computer vision, machine learning, and statistics. 
 % TODO: what are these important applications?
 
 \section{Data}
 
-Because wish to test the effectiveness of Wasserstein distance calculations for
-arbitrary distributions, we will generate test distributions using simulation
+As this is a largely theoretical and methodological project, we shall rely on numerical simulation and analysis. We will generate test distributions using simulation
 and do not need to concern ourselves with finding real data. When necessary, we
-will use standard distributions found in the literature for consistency.
+will use standard distributions found in the literature for consistency. 
 
 \section{Deliverables}
 
 We will implement optimization techniques to calculate Wasserstein distances and
-attempt a novel algorithm that performs competitively.
+attempt a novel algorithm that performs competitively. The deliverable will be a survey of recent literature and a report of our contributions.
 
 \section{Next Steps}
+
+First, we will review the current literature and familiarize ourselves with cutting-edge techniques in solving optimal transport problems. 
+
+We have the following tentative ideas which we may or may not individually
+implement, but from which we will source our  work,
 
 \begin{itemize}
 
 \item We will use linear programs to calculate Wasserstein distances for
-discrete metric spaces. We will explore average complexity for randomly
+discrete metric spaces.\footnote{This is the Kantorovich problem, see \cite{peyre2017computational}} We will explore average complexity for randomly
 generated test cases.
 
-\item 
+\item Training a neural network to hot-start an optimization algorithm for the
+discrete case, following recent literature on the creative use of deep learning techniques for difficult optimization problems as in \cite{dutting2017optimal}.
+
+\item Exploring other relevant optimization techniques such as simulated
+annealing and genetic algorithms.
 
 \end{itemize}
 
 % TODO: what are we doing next?
+\bibliographystyle{plain}
+
+\bibliography{proposal.bib}
+
 
 \end{document}
 

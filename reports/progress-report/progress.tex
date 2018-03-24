@@ -1,0 +1,92 @@
+\documentclass[11pt]{amsart}
+\usepackage{../am221}
+\linespread{1.2}
+\title{Optimal Transport Problems}
+\renewcommand{\b}{\mathbf}
+\newcommand{\R}{\mathbb{R}}
+\usepackage{bbm}
+\newcommand{\one}{\mathbbm{1}}
+\newcommand{\E}{\mathbb{E}}
+\author{Jiafeng Chen\and Francisco Rivera}
+\date{\today}
+
+\theoremstyle{remark}
+\newtheorem{rmk}{Remark}
+\begin{document}
+    \maketitle
+    \section{Theoretical foundations} 
+    Let $\b a \in \R^m_{\ge 0}$ and $\b b \in \R^n_{\ge 0}$ be two vectors of
+    nonnegative real numbers such that $\b a^T \one = \b b^T \one = 1$, where
+    $a_i$ and $b_j$ represents the amount of ``mass'' at different positions. 
+    We are
+    interested in a matrix $\b P \in \R^{m \times n}_{\ge 0}$ where $P_{ij}$
+    prescribes
+    the amount of mass flowing from $a_i$ to $b_j$. Naturally, we must have
+    $\sum_j P_{ij} = a_i$ and $\sum_i P_{ij} = b_j$, so that mass is preserved.
+    Let $\b C
+    \in \R^{m\times n}$ be a \emph{cost matrix}, where $C_{ij}$ represents the
+    cost of transporting one unit of $a_i$ to $b_j$. The \emph{Kantorovich
+    optimal transport problem} is the following linear program: \begin{align*}
+    \min_{\b P \in  \R^{m \times n}_{\ge 0}} \, & \sum_{i,j} P_{ij} C_{ij} \\
+    \text{subjected to } & \b P \one = \b a \\
+    & \b P^T \one = \b b
+    \end{align*}
+    
+    \begin{rmk}[A probabilistic view]
+    Let $X,Y$ be discrete random variables with support $\b
+    x \in \mathcal X^m$ and $\b y \in \mathcal Y^n$, such that their marginal
+    distributions are
+    prescribed by $P(X = x_i) = a_i$ and $P(Y =
+    y_j) = b_j$. Let $P_{ij} = P(X = x_i, Y = y_j)$, making $\b P = (P_{ij})_
+    {ij}$ a joint
+    distribution. Let $C: \mathcal X \times \mathcal Y \to \R$ be a cost
+    function. Then the
+    Kantorovich problem is equivalent to the following:\[
+    \min_{\b P}\, \E_{(X,Y) \sim \b P}\bk{C(X,Y)},
+    \]
+    where the expectation is taken over valid joint distributions of $(X,Y)$
+    respecting the marginal distributions. Note that when $\mathcal X = \mathcal
+    Y = \R^d$ and $C(x,y) = \norm{x-y}^p$, then the optimal value of the above
+    problem for $X,Y$ is the $p$-Wasserstein distance between the marginal
+    distributions $\mu_X,\mu_Y$ (up to a power of $1/p$), for discrete,
+    $d$-dimensional distributions with finite support.
+    \end{rmk}
+    
+    It can be shown that the dual problem of the above LP takes the following
+    form: \begin{align*}
+    \max_{(\b f, \b g) \in \R^{m} \times \R^n} \, & \sum_i a_i f_i + \sum_j b_j
+    g_j
+    \\ 
+    \text{subjected to } & f_i + g_j \le C_{ij}\, \text{ for all $i,j$}.
+    \end{align*}
+    The dual problem has a neat economic intuition. Suppose Kevin needs to
+    transport $\b a$ to $\b b$ but does not understand how. Francisco, his
+    profit-maximizing colleague, offers him a deal, where Kevin will pay $f_i$
+    for Francisco to
+    pick up a unit of mass at $a_i$ and pay $g_j$ for Francisco to dropoff a
+    unit of mass at $b_j.$ At minimum, Kevin knows that if any $f_i + g_j > C_
+    {ij}$, then Francisco is ripping him off, as transporting one unit from
+    $a_i$ to $b_j$ costs exactly $C_{ij}$. If, on the other hand, $f_i + g_j
+    \le C_{ij}$ is satisfied, then given any $\b P$, we have \[
+    \sum_{i,j} C_{ij}P_{ij} \ge \sum_{i,j} f_i P_{ij} + \sum_{i,j} g_j P_{ij} =
+    \sum_i f_i a_i + \sum_j g_j b_j \tag{Weak duality},
+    \]
+    which means that Kevin cannot lose by taking Francisco's deal. Strong
+    duality, which indeed holds, here imply that Francisco's optimal profit is
+    zero, and the trade is fair.
+    
+    % Note that, fixing $\b f$, the optimal choice of $g_j$ is \[
+    % g_j = \min_i (C_{ij} - f_i).
+    % \]
+    % Let $\b g = \b f^{\b C}$ where $(\b f^{\b C})_j = \min_i (C_{ij} - f_i)$,
+    % which is called a $\b C$-transform of $\b f$; we may reformulate the dual
+    % problem in terms of only one choice variable $\b f$.
+    
+    Given optimal solutions to the primal and dual, $\b P$, $(\b f, \b g)$,
+    respectively, \emph{complementary slackness} implies that \[
+    P_{ij} (C_{ij} - f_i - g_j) = 0
+    \]
+    holds, which means that $\b P_{ij} \neq 0 \implies C_{ij} = f_i - g_j$ and
+    vice versa.
+    
+\end{document}

@@ -2,19 +2,25 @@
 \usepackage{../am221}
 \linespread{1.2}
 \title{Optimal Transport Problems}
-\renewcommand{\b}{\mathbf}
 \newcommand{\R}{\mathbb{R}}
 \usepackage{bbm}
 \newcommand{\one}{\mathbbm{1}}
 \newcommand{\E}{\mathbb{E}}
+\usepackage{cleveref}
 \author{Jiafeng Chen\and Francisco Rivera}
 \date{\today}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, citecolor=Blue, linkcolor=blue}
+\renewcommand{\b}{\mathbf}
 
 \theoremstyle{remark}
 \newtheorem{rmk}{Remark}
 \begin{document}
     \maketitle
-    \section{Theoretical foundations} 
+    \section{Theoretical foundations}
+    The following is a concise review of Chapters 2 and 3 in 
+    \cite{peyre2017computational}.
+    
     Let $\b a \in \R^m_{\ge 0}$ and $\b b \in \R^n_{\ge 0}$ be two vectors of
     nonnegative real numbers such that $\b a^T \one = \b b^T \one = 1$, where
     $a_i$ and $b_j$ represents the amount of ``mass'' at different positions. 
@@ -87,6 +93,8 @@
     P_{ij} (C_{ij} - f_i - g_j) = 0
     \]
     holds, which means that $\b P_{ij} \neq 0 \implies C_{ij} = f_i - g_j$ and
-    vice versa.
-    
+    vice versa. 
+
+\bibliographystyle{alpha}
+\bibliography{../optimal-transport}
 \end{document}

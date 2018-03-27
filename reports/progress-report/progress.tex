@@ -1,24 +1,29 @@
-\documentclass[11pt]{amsart}
+\documentclass[11pt,reqno]{amsart}
 \usepackage{../am221}
 \linespread{1.2}
+\usepackage[margin=1.5in]{geometry}
 \title{Optimal Transport Problems}
 \newcommand{\R}{\mathbb{R}}
 \usepackage{bbm}
 \newcommand{\one}{\mathbbm{1}}
 \newcommand{\E}{\mathbb{E}}
-\usepackage{cleveref}
+%\usepackage[margin=1in]{geometry}
 \author{Jiafeng Chen\and Francisco Rivera}
 \date{\today}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true, citecolor=Blue, linkcolor=blue}
+\usepackage[capitalise,nameinlink]{cleveref}
+
+\hypersetup{colorlinks=true, citecolor=Blue, linkcolor=Brown}
 \renewcommand{\b}{\mathbf}
 
+\theoremstyle{definition}
+\newtheorem{prop}{Proposition}
 \theoremstyle{remark}
 \newtheorem{rmk}{Remark}
 \begin{document}
     \maketitle
     \section{Theoretical foundations}
-    The following is a concise review of Chapters 2 and 3 in 
+    The following is a concise review of selected topics in Chapters 2 and 3 in 
     \cite{peyre2017computational}.
     
     Let $\b a \in \R^m_{\ge 0}$ and $\b b \in \R^n_{\ge 0}$ be two vectors of
@@ -90,10 +95,87 @@
     
     Given optimal solutions to the primal and dual, $\b P$, $(\b f, \b g)$,
     respectively, \emph{complementary slackness} implies that \[
-    P_{ij} (C_{ij} - f_i - g_j) = 0
+    P_{ij} (C_{ij} - f_i - g_j) = 0 \tag{Complementary slackness}
     \]
     holds, which means that $\b P_{ij} \neq 0 \implies C_{ij} = f_i - g_j$ and
     vice versa. 
+        
+    \subsection{Dual-ascent algorithms and Hungarian algorithm}
+    
+    Let $S \subset \{1,\ldots,m\}$ and $S' \subset \{1,\ldots,n\}.$ Let $\one_S$
+    be a vector of zeros with ones at location prescribed by $S$. Given $\b f,
+    \b g$ a feasible pair for the dual, call $(i,j)$ a balanced pair if the
+    condition $f_i + g_j = C_{ij}$
+    binds, and inactive otherwise. Then 
+    \begin{prop}
+    
+        Let $(\tilde {\b f}, \tilde {\b g}) = (\b f, \b g) + \epsilon (\one_S,
+        -\one_{S'})$. Then $(\tilde {\b f}, \tilde {\b g})$ is dual feasible for
+        a sufficiently small $\epsilon$ if for all $i$, \[
+        (i,j) \text{ is balanced } \implies \text{$j \in S'$}.
+        \]
+    \label{prop:feasible}
+    \end{prop}
+    \begin{proof}
+        For all $i\in S$, consider \[
+        \epsilon_i = \min_{j: (i,j) \text{ inactive}} C_{ij} - f_i - g_j
+        \]
+        Let $\epsilon = \min_i \epsilon_i$. If $(i,j)$ is inactive, then \[
+        \tilde f_i + \tilde g_j \le f_i + \epsilon + g_j\le C_{ij},
+        \]
+        which continues to be inactive. If $(i,j)$ is balanced, then $\tilde
+        f_i + \tilde g_j = f_i + g_j = C_{ij}$. In either case, $\tilde {\b f},
+        \tilde {\b g}$ continues to be feasible.
+    \end{proof}
+    
+    \begin{prop}
+    \label{prop:dualascent}
+        If a dual feasible solution $(\b f, \b g)$ is not optimal, then there
+        exists $S,S'$ such that $(\tilde {\b f}, \tilde {\b g}) = (\b f, \b g) + \epsilon (\one_S,
+        -\one_{S'})$ is feasible for small enough $\epsilon$ with a strictly
+        better objective.
+    \end{prop}
+    
+    \begin{proof}
+        Let $\mathcal B$ be the set of balanced edges $(i,j)$, and consider the
+        bipartite graph on $\{1,\ldots,m\} \sqcup \{1,\ldots,n\}$ with edges in
+        $\mathcal B$. Let there be a source node $s$ with capacitated edges to
+        $\{1,\ldots,m\}$ with capacity $a_i$, and a sink node $t$ analogously
+        with capacities $b_j$. Consider the maximum flow $\b F$ on the network
+        via Ford-Fulkerson. If the throughput of the flow is one, then let $P_
+        {ij} = F_{ij}$, which generates a primal feasible solution $\b P$.
+        Strong duality would imply that $\b P, (\b f, \b g)$ are both optimal.
+        
+        Thus we may assume that the throughput is less than one. We label the
+        nodes reached from $s$ where $\b F$ does not saturate capacity, as well
+        as the nodes that contribute flow to any labeled nodes. Store the
+        labeled nodes in $Q$. Since the graph is bipartite, $Q$ can be split
+        into $S,S'$. Note that if $(i,j)$ is balanced and $i\in S$, then $j\in
+        S'$. By \cref{prop:feasible}, $(\tilde {\b f}, \tilde {\b g})$ so
+        defined is feasible. We wish to show that \[
+        \one_S^T \b a - \one_{S'}^T \b b > 0.
+        \]
+        We readily conclude that this is indeed the case by accounting for the
+        flow on the network.
+    \end{proof}
+    
+    \cref{prop:dualascent} provides a template for the celebrated Hungarian
+    algorithm \cite{kuhn2010hungarian}. The Hungarian algorithm solves the
+    Kantorovich problem in the case when both $\b a, \b b \propto \one$. In a
+    probability context for the Wasserstein distance between empirical measures,
+    if the measures $\mu, \nu$ are both $d$-dimensional with $n$ observations,
+    the Hungarian algorithm is $O(n^3)$ for $d>1$ and $O(n\log n)$ for\footnote{In the $d=1$ case, the optimal transport problem reduces to
+    sorting.} $d =
+    1$
+    \cite{bernton2017inference}.
+    
+    
+    \section{Application value}
+     
+    \cite{bernton2017inference} is an example of recent work applying the
+    Wasserstein distance to statistics and machine learning. 
+    % Restricting to a subclass of problems called \emph{matching problems}, where
+    % $\b a, \b b \propto \one$.
 
 \bibliographystyle{alpha}
 \bibliography{../optimal-transport}

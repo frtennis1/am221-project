@@ -1,0 +1,108 @@
+\documentclass[11pt,reqno]{amsart}
+
+% Page set-up
+\linespread{1.2}
+
+% Packages
+\usepackage{../am221}
+\usepackage{bbm}
+\usepackage{hyperref}
+\usepackage[capitalise,nameinlink]{cleveref}
+\hypersetup{colorlinks=true, citecolor=Blue, linkcolor=Brown}
+
+% Commands
+\renewcommand{\b}{\mathbf}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\one}{\mathbbm{1}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\KL}{\operatorname{KL}}
+\newcommand{\Lag}{\operatorname{Lagrange}}
+
+% Thm definitions
+\theoremstyle{definition}
+\newtheorem{prop}{Proposition}
+\theoremstyle{remark}
+\newtheorem{rmk}{Remark}
+
+\title{Notes on Entropic Regularization}
+\author{Jiafeng Chen\and Francisco Rivera}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Statement}
+
+The original problem is \begin{align*}
+\min \,& \sum_{i,j} P_{ij} C_{ij}\\
+\text{s.t. }&\b P\one = \b a \\
+&\b P^T \one = \b b
+\end{align*}
+\newcommand{\feasible}{\b U(\b a, \b b)}
+Denote the feasible region by $\feasible$. \emph{Entropic regularization}
+ considers the following modified problem: \[
+L^\epsilon_{\b C}(\b a ,\b b) = \min_{\b P \in \feasible} \sum_{i,j} P_{ij}C_
+{ij} + \epsilon \underbrace{\sum_
+{i,j} P_{ij}
+(\log P_{ij} - 1)}_{-H(\b P)}.
+\]
+We can show that the negative entropy $-H(\b P)$ is $1$-strongly convex (i.e.
+ Hessian minus $I$ is
+ positive semi-definite). Thus the objective is $\epsilon$-strongly convex. The
+ strong convexity means that the optimum $\b P_\epsilon$ is unique.
+ Unsurprisingly, $\b P_\epsilon \to \b P^\star$ as $\epsilon \to 0$ where $\b
+ P^\star$ is the maximal-entropy solution to the original problem $L_{\b C}^0$.
+ Moreover, note that if $\epsilon \to \infty$, we are essentially maximizing the
+ entropy, and unsurprisingly, the maximal entropy solution is $\b a \b b^T$:
+ In terms of probability, maximal entropy joint distribution is assuming
+ independence.
+
+We can reformulate the problem via \emph{KL projection}. Note that minimizing
+ the regularized objective is akin to minimizing \begin{align*}
+ &\sum_{i,j}\frac{1}{\epsilon}P_{ij}C_{ij} + P_{ij}(\log P_{ij} - 1) + e^{-C_
+{ij}/\epsilon} \\
+=& \sum_{i,j} P_{ij} \pr{\log P_{ij} - \log\pr{e^{-C_{ij}/\epsilon}}} - P_{ij} +
++ e^{-C_
+{ij}/\epsilon} \\
+=& \sum_{i,j}P_{ij} \log\frac{P_{ij}}{K_{ij}} - P_{ij} + K_{ij} =: \KL
+\binom{\b P}{\b K},
+ \end{align*}
+where $\b K_{ij} = \exp(-C_{ij}/\epsilon)$ is called a \emph{Gibbs kernel}. Thus
+ the problem is akin to projecting $\b K$ onto $\feasible$ via the KL-divergence
+ as a distance metric. 
+
+The Lagrangian of the regularized problem is \begin{align*}
+\Lag(\b P, \b f, \b g) = & \sum_{i,j} P_{ij}C_{ij} + \epsilon \sum_
+{i,j} P_{ij}
+(\log
+ P_{ij} - 1) \\ 
+& + \sum_i f_i\pr{a_i - \sum_{j}P_{ij}} + \sum_j g_j \pr{b_j - \sum_i P_{ij}},
+\end{align*}
+for which the first-order conditions yield \[
+C_{ij} + \epsilon \log P_{ij} - f_i - g_j = 0.
+\]
+Rewriting yields \[
+P_{ij} = e^{f_i/\epsilon} e^{-C_{ij} / \epsilon} e^{g_j / \epsilon} = u_i K_{ij}
+ v_j
+\]
+for some $\b u, \b v$. The condition prescribed by $\feasible$, written via $\b
+ u, \b v$, yield \[
+\b u\odot (\b K \b v) = \b a \quad \b v  \odot(\b K^T \b u) = \b b.
+\]
+Since the optimum is unique, we need only find $\b u, \b v$ such that these
+ conditions hold.
+
+Given $\b v$, we can compute $\b u$ via $\b u = \frac{\b a}{\b K \b v}$ and
+ vice versa. This motivates Sinkhorn's algorithm by initializing $\b v^{(0)} =
+ \one$ and computing \[
+\b u^{(\ell + 1)} = \frac{\b a}{\b K \b v^{(\ell)}} \quad \b v^{(\ell + 1)} = \frac{\b b}
+{\b K^T u^{(\ell + 1)}}
+\]
+
+It has been shown (2017!) that Sinkhorn updates achieves a $\tau$-approximate
+ solution of the unregularized problem in $O(n^2 \log(n)\tau^{-3})$ update
+ iterations.
+
+% \bibliographystyle{alpha}
+% \bibliography{../optimal-transport}
+\end{document}

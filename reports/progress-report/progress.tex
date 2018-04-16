@@ -1,7 +1,7 @@
 \documentclass[11pt,reqno]{amsart}
 
 % Page set-up
-\usepackage[margin=1.5in]{geometry}
+\usepackage[margin=1in]{geometry}
 \linespread{1.2}
 
 % Packages
@@ -30,13 +30,18 @@
 \begin{document}
 \maketitle
 
+\tableofcontents
+
 \section{Revisions}
 
 By and large, our project goal has remained the same. We have, however, focused
 our scope to primarily the Kantorovich optimal transport problem. This is
 contrast to the more general but intractable continuous Wassserstein problem.
 
-\section{Theoretical foundations}
+\section{Completed Steps}
+
+\subsection{Theoretical foundations}
+
 The following is a concise review of selected topics in Chapters 2 and 3 in
 \cite{peyre2017computational}.
 
@@ -115,7 +120,7 @@ respectively, \emph{complementary slackness} implies that
 holds, which means that $\b P_{ij} \neq 0 \implies C_{ij} = f_i - g_j$ and
 vice versa. 
     
-\subsection{Dual-ascent algorithms and Hungarian algorithm}
+\subsubsection{Dual-ascent algorithms and Hungarian algorithm}
 
 Let $S \subset \{1,\ldots,m\}$ and $S' \subset \{1,\ldots,n\}.$ Let $\one_S$ be
 a vector of zeros with ones at location prescribed by $S$. Given $\b f, \b g$ a
@@ -181,7 +186,7 @@ Hungarian algorithm is $O(n^3)$ for $d>1$ and $O(n\log n)$ for\footnote{In the
 $d=1$ case, the optimal transport problem reduces to sorting.} $d = 1$
 \cite{bernton2017inference}.
 
-\section{Completed Steps}
+\subsection{Numerical experiments}
 
 We have completed empirical assessments of the LP method as well as the
 Hungarian algorithm through computational experiments. The code which implements
@@ -190,19 +195,19 @@ this can be found on the
 repository}.\footnote{\url{https://github.com/frtennis1/am221-project/tree/master/code}}
 
 The Hungarian algorithm's runtime can be visualized, along with a log-log plot
-regression,
+regression, in \cref{fig:hungarianruntime}. We also include the runtime plots for the simplex algorithm in \cref{fig:hungarianruntime}.
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{../../code/hungarianruntime}
+\includegraphics[width=\textwidth]{../../code/lpruntime}
+\caption{Runtime comparison}
 \label{fig:hungarianruntime}
 \end{figure}
 
 
-We can also recreate similar plots for the linear-programming algorithm,
-
-\begin{figure}[h]
-\includegraphics[width=\textwidth]{../../code/lpruntime}
-\end{figure}
+% \begin{figure}[h]
+% % \end{figure}
+% % 
 
 \section{Next Steps}
 
@@ -211,7 +216,7 @@ analysis of existing algorithms to solve the optimal-transport problem. In
 particular, we remain to computationally analyze the dual-ascent algorithms in
 generality, and can also explore the auction algorithm. Secondly, we will
 attempt to approach the problem from a novel direction, with the ultimate
-ambition of arriving at a new algorithm that performs competitively.
+ambition of arriving at a new algorithm that performs competitively. There is also a rich literature and ongoing development on approximate optimization methods, e.g. via entropic regularization (Chapter 4 in \cite{peyre2017computational}).  
 
 % \section{Application value}
  

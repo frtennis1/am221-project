@@ -1,0 +1,7 @@
+\contentsline {section}{\tocsection {}{1}{Revisions}}{1}{section.1}
+\contentsline {section}{\tocsection {}{2}{Completed Steps}}{1}{section.2}
+\contentsline {subsection}{\tocsubsection {}{2.1}{Theoretical foundations}}{1}{subsection.2.1}
+\contentsline {subsubsection}{\tocsubsubsection {}{2.1.1}{Dual-ascent algorithms and Hungarian algorithm}}{2}{subsubsection.2.1.1}
+\contentsline {subsection}{\tocsubsection {}{2.2}{Numerical experiments}}{3}{subsection.2.2}
+\contentsline {section}{\tocsection {}{3}{Next Steps}}{3}{section.3}
+\contentsline {section}{\tocsection {}{}{References}}{4}{section*.4}

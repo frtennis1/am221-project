@@ -224,7 +224,10 @@ so as to make the objective $\epsilon$-strongly convex. \emph{Entropic
  \argmin_{\b P \in \feasible} \sum_{i,j}P_{ij}C_{ij},
 \]
 where the convergence is towards the maximal-entropy solution of 
-\eqref{eq:ot_problem}. 
+\eqref{eq:ot_problem}. The convergence property makes \eqref{eq:entropic} an
+ attractive alternative to solving optimal transport; other reasons why 
+\eqref{eq:entropic} is useful is explored in a seminal article by 
+\cite{cuturi2013sinkhorn}. 
 
 Leveraging duality theory, the Lagrangian of the regularized problem is 
 \begin{align*}
@@ -329,6 +332,13 @@ x_i^k = \log \frac{a_i}{\sum_j A_{ij} e^{y_j^{k-1}}} = \log \frac{a_i}{e^
 (k-1)}\one} + x_i^{k-1},
 \]
 which is exactly the update rule in \cref{alg:sinkhorn}. 
+
+\begin{rmk}
+  We do not need to limit ourselves to using coordinate descent to minimize $f$.
+ For instance
+\cite{brauer2017sinkhorn} uses Newton's method, and achieves similar convergence
+ performance as \cref{alg:sinkhorn}.
+\end{rmk}
 
 The proof of \cite{altschuler2017near} uses the follow strategy. First, we
  calculate the step gain in the Sinkhorn-Knopp algorithm for optimizing $f$ in
@@ -475,8 +485,69 @@ If we
  b,\epsilon, \delta)$ is tractable is a major difficulty, which we leave to
  future work.
 
-\subsection{Genetic Algorithms (Hokey)} % (fold)
+
+\subsection{Genetic Algorithm} % (fold)
 \label{sub:genetic_algorithms_}
+
+Recent advances in machine learning points towards the versatility of genetic
+ algorithms, even as a competitive alternative to deep learning based on
+ gradient methods \cite{such2017deep}. Inspired by these advances, we consider
+ the following genetic algorithm
+
+\begin{algorithm}
+\caption{A toy genetic algorithm for optimal transport}
+\label{alg:genetic}
+
+  \begin{algorithmic}
+\Function{GeneticOT}{$\phi, \gamma, k, \b a, \b b, T$}
+\State $\mathsf{initial} \gets \b a \b b^T$
+\State $\mathsf{family} \gets \mathsf{Array}[\phi]$, initialized to $
+\mathsf{initial}$
+\State $\mathsf{children} \gets \mathsf{Array}[\phi\gamma]$, initialized to
+ empty
+  \For{$\mathsf{generation}$ in $1:T$}
+    \For{$\mathsf{person}$ in $\mathsf{family, \gamma}$}
+      \For{$\mathsf{person}'$ in \Call{Subset}{$\mathsf{family}$}} \Comment
+{\textsc{Subset} chooses a subset of size $\gamma$}
+\State $\mathsf{child} \gets$ \Call{Marry}{$\mathsf{person}, 
+\mathsf{person}'$}
+\State $\mathsf{child} \gets$ \Call{Perturb}{$\mathsf{child},k$}
+\State Add $\mathsf{child}$ to $\mathsf{children}$
+\EndFor
+\EndFor
+\State Choose the $\phi$ elements in $\mathsf{children}$ with minimal cost for
+ \eqref{eq:ot_problem} and set to $\mathsf{family}$
+\EndFor
+\State\Return{element in $\mathsf{family}$ that achieves minimal cost}
+\EndFunction
+  \end{algorithmic}
+\end{algorithm}
+Here \textsc{Marry} picks two probability matrices and averages them
+ elementwise, and \textsc{Perturb} chooses random indices $i_1,i_2, j_1,j_2$ and
+ moves mass in the probability matrix in such a way that preserves the marginal
+ distributions and respects the constraint that $0\le p \le 1$ for all
+ components $p$. Such perturbations are repeated $k$ times. $\phi$ is a
+ parameter that controls the size of families, and $\gamma$ is a parameter that
+ decides the number of offsprings. At each generation, we take the top $\phi$
+ matrices that achieve the lowest cost. We hoped that the population drifts
+ towards the optimal transport matrix as the number of generation increases.
+
+The empirical results we obtain are less than encouraging, however. We plot the
+ optimal cost each generation with $n = m = 4, \phi=100, \gamma =5$ for various
+ values of $k$ in \cref{fig:genetic_fail}. Curiously, the improvement in the
+ first generation is always large, with a magnitude of improvement increasing
+ in $k$, but the algorithm seems to achieve some non-optimal steady state as
+ generation goes on. Of course, \cref{alg:genetic} can potentially be improved
+ by thinking about the design of \textsc{Marry} and \textsc{Perturb} more
+ carefully, perhaps leveraging some information about $\b C$. 
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics{figs/genetic.eps}
+  \caption{Non-convergence of \cref{alg:genetic}}
+  \label{fig:genetic_fail}
+\end{figure}
+
 
 % subsection genetic_algorithms_ (end)
 % section inexact_methods (end)
@@ -485,6 +556,7 @@ If we
 \label{sec:applications_}
 
 % section applications_ (end)
+
 
 \section{Conclusion} % (fold)
 \label{sec:conclusion}

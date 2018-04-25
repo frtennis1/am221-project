@@ -1,0 +1,146 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2018
+
+% ready for submission
+\usepackage[preprint]{nips_2018}
+
+% to compile a preprint version, e.g., for submission to arXiv, add
+% add the [preprint] option:
+% \usepackage[preprint]{nips_2018}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+% \usepackage[final]{nips_2018}
+
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2018}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{../am221}
+
+% \title{Formatting instructions for NIPS 2018}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+% \author{
+%   David S.~Hippocampus\thanks{Use footnote for providing further
+%     information about author (webpage, alternative
+%     address)---\emph{not} for acknowledging funding agencies.} \\
+%   Department of Computer Science\\
+%   Cranberry-Lemon University\\
+%   Pittsburgh, PA 15213 \\
+%   \texttt{hippo@cs.cranberry-lemon.edu} \\
+%   %% examples of more authors
+%   %% \And
+%   %% Coauthor \\
+%   %% Affiliation \\
+%   %% Address \\
+%   %% \texttt{email} \\
+%   %% \AND
+%   %% Coauthor \\
+%   %% Affiliation \\
+%   %% Address \\
+%   %% \texttt{email} \\
+%   %% \And
+%   %% Coauthor \\
+%   %% Affiliation \\
+%   %% Address \\
+%   %% \texttt{email} \\
+%   %% \And
+%   %% Coauthor \\
+%   %% Affiliation \\
+%   %% Address \\
+%   %% \texttt{email} \\
+% }
+
+% Commands
+\renewcommand{\b}{\mathbf}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\one}{\mathbbm{1}}
+\newcommand{\E}{\mathbb{E}}
+
+% Thm definitions
+\theoremstyle{definition}
+\newtheorem{prop}{Proposition}
+\theoremstyle{remark}
+\newtheorem{rmk}{Remark}
+
+\title{420}
+\author{Jiafeng Chen\\School of Engineering and Applied Sciences\\Harvard University\\\url{jiafengchen@college.harvard.edu}\And Francisco Rivera\\School of Engineering and Applied Sciences\\Harvard University\\\url{frivera@college.harvard.edu}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction and Background}
+
+\subsection{The Optimal Transport Problem}
+
+\subsection{Applications} % (fold)
+\label{sub:applications}
+
+% subsection applications (end)
+
+\section{Exact Methods}
+
+
+\subsection{Linear Programming} % (fold)
+\label{sub:linear_programming}
+
+% subsection linear_programming (end)
+
+\subsection{Hungarian Algorithm} % (fold)
+\label{sub:hungarian_algorithm}
+
+% subsection hungarian_algorithm (end)
+
+\section{Inexact Methods} % (fold)
+\label{sec:inexact_methods}
+
+\subsection{Entropic Regularization and Sinkhorn's Algorithm} % (fold)
+\label{sub:entropic_regularization_and_sinkhorn_s_algorithm}
+
+\subsubsection{Convergence}
+
+\subsubsection{Numerical Experiments}
+
+
+% subsection entropic_regularization_and_sinkhorn_s_algorithm (end)
+
+\subsection{Genetic Algorithms (Hokey)} % (fold)
+\label{sub:genetic_algorithms_}
+
+% subsection genetic_algorithms_ (end)
+% section inexact_methods (end)
+
+\section{Applications and Experiments} % (fold)
+\label{sec:applications_}
+
+% section applications_ (end)
+
+\section{Conclusion} % (fold)
+\label{sec:conclusion}
+
+% section conclusion (end)
+
+
+\bibliographystyle{alpha}
+\bibliography{../optimal-transport}
+\end{document}

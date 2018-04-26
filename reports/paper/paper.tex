@@ -206,26 +206,44 @@ and define the matrix
 \[ \mathbf{A} := \begin{bmatrix} I_n \otimes \mathbf{1}_m \\ \mathbf{1}_n
 \otimes I_m \end{bmatrix} \]
 which allows us to formulate our LP as,
-\[ \min \mathbf{c}^\top \mathbf{x} \text{ such that } \mathbf{x} \ge 0, \mathbf{A} \mathbf{x} = \begin{bmatrix}
-\mathbf{a} \\ \mathbf{b} \end{bmatrix}.\]
+\[ \min \mathbf{c}^\top \mathbf{x} \text{ such that } \mathbf{x} \ge 0,
+\mathbf{A} \mathbf{x} = \begin{bmatrix} \mathbf{a} \\ \mathbf{b}
+\end{bmatrix}.\]
+
+\begin{figure}[b]
+\includegraphics[width=\textwidth]{../../code/lpruntime}
+\caption{LP Solver Runtime}
+\label{fig:lpruntime}
+\end{figure}
 
 We may then benchmark the performance of this data by generating data. We
 generate random square $n \times n$ cost matrices by making each entry i.i.d.
 $\chi^2(1)$, and perform optimal transport on $\mathbf{a} = \mathbf{b} =
 \mathbf{1}_n / n$. The runtimes for different values of $n$ are documented in
-\cref{fig:lpruntime}.
-
-\begin{figure}[h]
-\includegraphics[width=\textwidth]{../../code/lpruntime}
-\caption{Runtime comparison}
-\label{fig:lpruntime}
-\end{figure}
-
+\cref{fig:lpruntime}. While this gives us a baseline to how quickly we can
+compute optimal transport problems, solving the problem for $n$ bigger than a
+couple dozen quickly becomes an expensive task. Thus, we may look elsewhere for
+more efficient solutions that either solve a special case or provide an
+approximate solution.
 
 % subsection linear_programming (end)
 
 \subsection{Hungarian Algorithm} % (fold)
 \label{sub:hungarian_algorithm}
+
+One such special case of the optimal transport problem is when $\mathbf{a} =
+\mathbf{b} \propto \mathbf{1}_n$ as in our simulations to test the performance
+of the generic LP solver. In this case, mass is being matched in unit pieces,
+which makes the problem more tractable. The Hungarian algorithm solves this
+special-case.
+
+% TODO: exposition on how Hungarian works
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{../../code/hungarianruntime.pdf}
+\caption{Hungariant Algorithm runtime}
+\label{fig:hungarianruntime}
+\end{figure}
 
 % subsection hungarian_algorithm (end)
 
@@ -583,6 +601,43 @@ The empirical results we obtain are less than encouraging, however. We plot the
 
 \section{Applications and Experiments} % (fold)
 \label{sec:applications_}
+
+The applications of the optimal transport problem to the physical transportation
+of objects is practically explicit in the problem statement. This is but one of
+many applications, though. In particular, we explore the use of optimal
+transport in the image processing of MNIST images.
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics{../../code/ot-mnist-evol.pdf}
+  \caption{Optimal transport on MNIST images}
+  \label{fig:mnisttransport}
+\end{figure}
+
+Optimal transport provides a natural language with which to talk about image
+similarity. If we consider the darkness of a pixel as ``mass,''  the similarity
+of two images could be quantified as the units of mass times distance that need
+to be moved in order to transform it into the second image. This requires us to
+normalize the image such that the pixel intensities sum to 1, but this is not a
+problem with MNIST images which do not differ significantly in their average
+brightness. The transport also requires a choice of cost function between two
+pixels. We opt for an $L^2$ penalization on the distance between the pixels, but
+alternative metrics such as $L^1$ perform similarly \cref{fig:mnisttransport}
+illustrates what this transformation looks like for a ``0'' being transported
+into a ``6.'' 
+
+To verify that the similarity is behaving as we expect, we can compare the
+similarity of a number ``5'' against its most similar images in a small sample
+of the MNIST dataset. The most similar images are also 5's, as depicted in
+\cref{fig:mnistsim}.
+
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics{../../code/mnist-similarity.pdf}
+  \caption{MNIST Similarity Metric}
+  \label{fig:mnistsim}
+\end{figure}
 
 
 

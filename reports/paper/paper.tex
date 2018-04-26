@@ -535,8 +535,8 @@ Recent advances in machine learning points towards the versatility of genetic
 \State $\mathsf{children} \gets \mathsf{Array}[\phi\gamma]$, initialized to
  empty
   \For{$\mathsf{generation}$ in $1:T$}
-    \For{$\mathsf{person}$ in $\mathsf{family, \gamma}$}
-      \For{$\mathsf{person}'$ in \Call{Subset}{$\mathsf{family}$}} \Comment
+    \For{$\mathsf{person}$ in $\mathsf{family}$}
+      \For{$\mathsf{person}'$ in \Call{Subset}{$\mathsf{family}, \gamma$}} \Comment
 {\textsc{Subset} chooses a subset of size $\gamma$}
 \State $\mathsf{child} \gets$ \Call{Marry}{$\mathsf{person}, 
 \mathsf{person}'$}

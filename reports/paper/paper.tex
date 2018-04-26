@@ -194,6 +194,34 @@ vice versa.
 \subsection{Linear Programming} % (fold)
 \label{sub:linear_programming}
 
+The \ref{eq:ot_problem} Optimal Transport problem as formulated is an LP. This
+means that a natural first-step to benchmarking the problem difficulty is to use
+a generic LP solver. The only difficulty we face when doing this is that we must
+flatten our arguments from matrices to vectors in order to fit the API of a
+generic LP solver, such as \texttt{cvxopt.solvers.lp} which we employ. Recall
+that our problem inputs are $\mathbf{a} \in \mathbb{R}^n_{\ge 0}$, $\mathbf{b}
+\in \mathbb{R}^m_{\ge 0}$ with sum of entries equal to 1 and $\mathbf{C} \in
+\mathbb{R}^{n,m}$. We flatten $C$ into a vector $\mathbf{c} \in \mathbb{R}^{nm}$
+and define the matrix
+\[ \mathbf{A} := \begin{bmatrix} I_n \otimes \mathbf{1}_m \\ \mathbf{1}_n
+\otimes I_m \end{bmatrix} \]
+which allows us to formulate our LP as,
+\[ \min \mathbf{c}^\top \mathbf{x} \text{ such that } \mathbf{x} \ge 0, \mathbf{A} \mathbf{x} = \begin{bmatrix}
+\mathbf{a} \\ \mathbf{b} \end{bmatrix}.\]
+
+We may then benchmark the performance of this data by generating data. We
+generate random square $n \times n$ cost matrices by making each entry i.i.d.
+$\chi^2(1)$, and perform optimal transport on $\mathbf{a} = \mathbf{b} =
+\mathbf{1}_n / n$. The runtimes for different values of $n$ are documented in
+\cref{fig:lpruntime}.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{../../code/lpruntime}
+\caption{Runtime comparison}
+\label{fig:lpruntime}
+\end{figure}
+
+
 % subsection linear_programming (end)
 
 \subsection{Hungarian Algorithm} % (fold)
@@ -551,18 +579,18 @@ The empirical results we obtain are less than encouraging, however. We plot the
 
 
 % subsection genetic_algorithms_ (end)
-% section inexact_methods (end)
+
 
 \section{Applications and Experiments} % (fold)
 \label{sec:applications_}
 
-% section applications_ (end)
+
 
 
 \section{Conclusion} % (fold)
 \label{sec:conclusion}
 
-% section conclusion (end)
+
 
 
 \bibliographystyle{alpha}

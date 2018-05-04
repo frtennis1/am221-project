@@ -294,9 +294,13 @@ One such special case of the optimal transport problem is when $\mathbf{a} =
 \mathbf{b} \propto \mathbf{1}_n$ as in our simulations to test the performance
 of the generic LP solver. In this case, mass is being matched in unit pieces,
 which makes the problem more tractable. The Hungarian algorithm solves this
-special-case.
-
-% TODO: exposition on how Hungarian works
+special-case. The Hungarian algorithm is also called a dual-ascent method
+because it starts by establishing feasible solutions to the primal and dual
+problems, and proceeds by improving these solutions until their objectives
+match. We empirically test the performance of such an algorithm, providing the
+results in \cref{fig:hungarianruntime}. As we can note when comparing to the
+general case LP, the run-times for comparably sized problems are distinctly
+smaller for the Hungarian algorithm.
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{../../code/hungarianruntime.pdf}
@@ -704,7 +708,18 @@ of the MNIST dataset. The most similar images are also 5's, as depicted in
 \section{Conclusion} % (fold)
 \label{sec:conclusion}
 
+To conclude, our goals in surveying the topics presented are two-fold. Firstly,
+we hope to illustrate the richness of the computational toolkit appropriate for
+solving optimal transport problems. We survey both exact methods, such as the LP
+formulation and the Hungarian method, as well as potentially faster inexact
+approximations, such as the entropic regularized problem and genetic algorithms.
+In doing so, we emphasize both theory and empirics to understand how these
+algorithms perform from different perspectives.
 
+Second, we hope to convey the flexible applicability of the optimal transport
+problem. We illustrate this with a foray into machine vision and the MNIST
+dataset as well as motivation of different intuitions for the optimal transport
+problem.
 
 
 \bibliographystyle{alpha}

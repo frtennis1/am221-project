@@ -59,7 +59,7 @@
 % handle tweaks for camera-ready copy vs. submission copy
 \if@preprint
   \newcommand{\@noticestring}{%
-    Preprint. Work in progress.%
+    % Preprint. Work in progress.%
   }
 \else
   \if@nipsfinal
@@ -118,7 +118,8 @@
     top=1in,
     headheight=12pt,
     headsep=25pt,
-    footskip=30pt
+    footskip=30pt,
+    margin=1in
   }
   \@ifpackageloaded{fullpage}
     {\PackageWarning{nips_2018}{fullpage package not allowed! Overwriting formatting.}}

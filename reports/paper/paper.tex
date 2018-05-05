@@ -602,7 +602,7 @@ If we
 Recent advances in machine learning points towards the versatility of genetic
  algorithms, even as a competitive alternative to deep learning based on
  gradient methods \cite{such2017deep}. Inspired by these advances, we consider
- the following genetic algorithm
+ the following genetic algorithm.
 
 \begin{algorithm}
 \caption{A toy genetic algorithm for optimal transport}
@@ -666,9 +666,9 @@ The empirical results we obtain are less than encouraging, however. We plot the
 \label{sec:applications_}
 
 The applications of the optimal transport problem to the physical transportation
-of objects is practically explicit in the problem statement. This is but one of
-many applications, though. In particular, we explore the use of optimal
-transport in the image processing of MNIST images.
+of objects is practically explicit in the problem statement. As we highlight
+previously his is but one of many applications. In particular, we explore the
+use of optimal transport in the image processing of MNIST images.
 
 \begin{figure}[tb]
   \centering
@@ -680,12 +680,12 @@ transport in the image processing of MNIST images.
 Optimal transport provides a natural language with which to talk about image
 similarity. If we consider the darkness of a pixel as ``mass,''  the similarity
 of two images could be quantified as the units of mass times distance that need
-to be moved in order to transform it into the second image. This requires us to
+to be moved, in order to transform it into the second image. This requires us to
 normalize the image such that the pixel intensities sum to 1, but this is not a
-problem with MNIST images which do not differ significantly in their average
+problem with MNIST images, which do not differ significantly in their average
 brightness. The transport also requires a choice of cost function between two
 pixels. We opt for an $L^2$ penalization on the distance between the pixels, but
-alternative metrics such as $L^1$ perform similarly \cref{fig:mnisttransport}
+alternative metrics such as $L^1$ perform similarly. \cref{fig:mnisttransport}
 illustrates what this transformation looks like for a ``0'' being transported
 into a ``6.'' 
 
@@ -712,7 +712,7 @@ To conclude, our goals in surveying the topics presented are two-fold. Firstly,
 we hope to illustrate the richness of the computational toolkit appropriate for
 solving optimal transport problems. We survey both exact methods, such as the LP
 formulation and the Hungarian method, as well as potentially faster inexact
-approximations, such as the entropic regularized problem and genetic algorithms.
+approximations, such as the \eqref{eq:entropic} problem and genetic algorithms.
 In doing so, we emphasize both theory and empirics to understand how these
 algorithms perform from different perspectives.
 

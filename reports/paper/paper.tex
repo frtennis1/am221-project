@@ -112,27 +112,26 @@ This project should serve as an introductory note and broad overview of both
  literature by going through a few recent articles in detail.
 
 The organization of this report is as follows: \cref{sub:problem_intro}
- introduces the
- discrete optimal transport problem and discusses its interpration, dual
- problem, and basic theoretical properties as a linear program. \cref{sec:exact} discusses methods to solve the optimal transport problem \eqref{eq:ot_problem}
- exactly, introducing the Hungarian algorithm \cite{kuhn2010hungarian} in 
-\cref{sub:hungarian_algorithm} and presenting a proof of its correctness. The
- Hungarian algorithm is cubic in run-time, which is optimal for exact solution
- of \eqref{eq:ot_problem}, but is often too slow for practical
- applications discussed in \cref{sub:applications}. As such, we discuss
- approximate
- optimization methods in \cref{sec:inexact_methods}, where 
+introduces the discrete optimal transport problem and discusses its
+interpration, dual problem, and basic theoretical properties as a linear
+program. \cref{sec:exact} discusses methods to solve the optimal transport
+problem \eqref{eq:ot_problem} exactly, introducing the Hungarian algorithm
+\cite{kuhn2010hungarian} in \cref{sub:hungarian_algorithm} and presenting an
+empirical analysis of its runtime. The Hungarian algorithm appears cubic in
+run-time, confirming theoretical asymptotic analysis, which is optimal for exact
+solution of \eqref{eq:ot_problem}, but is often too slow for practical
+applications discussed in \cref{sub:applications}. As such, we discuss
+approximate optimization methods in \cref{sec:inexact_methods}, where
 \cref{sub:entropic_regularization_and_sinkhorn_s_algorithm} focuses on the
- Sinkhorn-Knopp algorithm used to solve a convexification of 
+Sinkhorn-Knopp algorithm used to solve a convexification of
 \eqref{eq:ot_problem} known as \ref{eq:entropic}. We present an elegant and
- recent upper
- bound of Sinkhorn-Knopp's run-time by
- \cite{altschuler2017near}, as well as numerical experiments and speculations
- about future work. In \cref{sub:genetic_algorithms_}, we attempt to use genetic
- algorithms to approximately solve \eqref{eq:ot_problem}, motivated by recent advances by 
+recent upper bound of Sinkhorn-Knopp's run-time by \cite{altschuler2017near}, as
+well as numerical experiments and speculations about future work. In
+\cref{sub:genetic_algorithms_}, we attempt to use genetic algorithms to
+approximately solve \eqref{eq:ot_problem}, motivated by recent advances by
 \cite{such2017deep}. In \cref{sec:applications_}, we showcase toy examples of
- using optimal transport in computer vision with the well-known MNIST dataset.
- \cref{sec:conclusion} concludes.
+using optimal transport in computer vision with the well-known MNIST dataset.
+\cref{sec:conclusion} concludes.
  
  
 
